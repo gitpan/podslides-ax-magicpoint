@@ -1,0 +1,115 @@
+=head1 pod2axpoint.xsl
+
+=head1 WHAT IS IT?
+
+axpoint2mgp.xsl - Stylesheet to convert AxPoint to Magicpoint format
+
+This is proof-of-concept software that implements a couple of nice
+features for simple presentations. The goal was: write presentations
+in POD and run them in either acrobat reader or with the Magicpoint
+presentation kit.
+
+Depending on future development, this neat little hack may go either
+way:
+
+=over 4
+
+=item
+
+If AxPoint becomes really useable, probably only pod2axpoint.xsl will
+survive. The author of AxPoint has excellent plans...
+
+=item
+
+If people continue to prefer MagicPoint over AxPoint, probably
+axpoint2mgp.xsl will get the missing features
+
+=back
+
+In any case, if you need to write slides B<now>, you get the best of
+three worlds: B<POD, AxPoint, and MagicPoint>.
+
+=head1 SYNOPSIS
+
+This is not perl, so we have no standard installation path. Keep the
+source of this distribution around and write your pod within its root
+directory.
+
+	make foo.pdf       # creates foo.pdf from foo.pod
+	make foo.mgp       # creates foo.mgp from foo.pod
+
+=head1 DESCRIPTION
+
+Pod is convenient to write markup.
+
+AxPoint and Magicpoint are powerful presentation techniques.
+
+Since version 0.12 of Pod::SAX you can convert (a broad subset of) POD
+to (a sufficiently large subset of) AxPoint.
+
+With this distribution of axpoint2mgp.xsl you can convert the same
+subset of POD to a sufficiently large subset of MagicPoint.
+
+This means you have the advantage of writing POD and the advantage of
+the free choice between AxPoint and MagicPoint for the price of
+narrowing the available features.
+
+=head1 MISSING
+
+We only support a subset of AxPoint. See the pod2axpoint.xsl manpage
+for the limitations. In short, all of the transition tricks, graphics,
+color and SVG are not supported.
+
+More annoying is the fact that currently there is no way to specify
+the parameters for the title page of the presentation within POD. You
+will need to slightly adjust the two invoved XSLT stylesheets to fit
+your needs.
+
+=head1 TITLE PAGE, PAUSE
+
+You are expected to edit pod2axpoint.xsl to contain the speaker and
+email in order to produce a modest title page. Yes, B<sorry>, if you
+need more than that on the title page, please fix both pod2axpoint.xsl
+and axpoint2mgp.xsl.
+
+After you have made your title page, you need to decide globally if
+you want to I<pause> after each and every item or if you want whole
+pages be displayed immediately. The default configuration displays
+whole pages at once.
+
+=over 4
+
+=item
+
+To change that for AxPoint, you need to hack pod2axpoint.xsl,
+and
+
+=item
+
+to change that for Magicpoint, you need to set the global
+variable C<pause> to C<%pause> in the axpoint2mgp.xsl.
+
+=back
+
+=head1 PREREQUISITES, HOWTO
+
+At the time of this writing (2002-11-04) you need Pod::SAX version
+0.11 or newer. Matt Sergeant has confirmed he will apply my patch for
+the next release. If you only find version 0.11, you need to apply my
+patch patch.podsax-20021028.txt which comes with this distribution.
+
+You need to build and install Pod::SAX and then copy pod2axpoint.xsl
+from the Pod::SAX distribution to this directory.
+
+You also need XML::SAX::Writer and XML::Handler::AxPoint installed
+and you need xsltproc from the libxslt library.
+
+Both the script axpoint and the program xsltproc must be in your
+PATH.
+
+Finally, write your POD in a file, say C<foo.pod>, and type
+
+	make foo.pdf       # creates foo.pdf from foo.pod
+	make foo.mgp       # creates foo.mgp from foo.pod
+
+=cut
